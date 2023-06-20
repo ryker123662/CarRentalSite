@@ -2,7 +2,6 @@
 import React from "react";
 import { useState } from "react";
 
-import { useRouter } from "next/navigation";
 import SearchManufacturer from "./SearchManufacturer";
 import Image from "next/image";
 import { SearchBarProps } from "@/types";
@@ -24,8 +23,6 @@ const SearchButton = ({ otherClasses }: { otherClasses: string }) => (
 const SearchBar = ({ setManuFacturer, setModel }: SearchBarProps) => {
     const [searchManufacturer, setSearchManufacturer] = useState("");
     const [searchModal, setSearchModal] = useState("");
-
-    const router = useRouter();
 
     const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -63,7 +60,7 @@ const SearchBar = ({ setManuFacturer, setModel }: SearchBarProps) => {
                     name="modal"
                     value={searchModal}
                     onChange={(e) => setSearchModal(e.target.value)}
-                    placeholder="Volkswagen"
+                    placeholder="Tiguan..."
                     className="searchbar__input"
                 />
                 <SearchButton otherClasses="sm:hidden" />
