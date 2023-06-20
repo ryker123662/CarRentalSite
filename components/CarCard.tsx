@@ -13,9 +13,18 @@ interface CarCardProps {
 }
 
 const CarCard = ({ car }: CarCardProps) => {
+    const [isLiked, setIsLiked] = useState(false);
     const { city_mpg, year, make, model, transmission, drive } = car;
 
     const [isOpen, setIsOpen] = useState(false);
+
+    function closeModal() {
+        setIsOpen(false);
+    }
+
+    function openModal() {
+        setIsOpen(true);
+    }
 
     const carRent = calculateCarRent(city_mpg, year);
 
@@ -25,19 +34,24 @@ const CarCard = ({ car }: CarCardProps) => {
                 <h2 className="car-card__content-title">
                     {make} {model}
                 </h2>
+
+                <Image
+                    src={!isLiked ? "/heart-outline.svg" : "/heart-filled.svg"}
+                    width={24}
+                    height={24}
+                    alt="heart icon"
+                    className="object-contain cursor-pointer mt-0.5"
+                    onClick={() => setIsLiked(!isLiked)}
+                />
             </div>
 
-            <p className="flex mt-6 text-[32px] leading-[38px] font-extrabold">
-                <span className="self-start text-[14px] leading-[17px] font-semibold">
-                    $
-                </span>
+            <p className="car-card__price">
+                <span className="car-card__price-dollar">$</span>
                 {carRent}
-                <span className="self-end text-[14px] leading-[17px] font-medium">
-                    /day
-                </span>
+                <span className="car-card__price-day">/day</span>
             </p>
 
-            <div className="relative w-full object-contain h-40 my-3">
+            <div className="car-card__image">
                 <Image
                     src={generateCarImageUrl(car)}
                     alt="car model"
@@ -48,30 +62,30 @@ const CarCard = ({ car }: CarCardProps) => {
             </div>
 
             <div className="relative flex w-full mt-2">
-                <div className="flex group-hover:invisible w-full justify-between text-gray">
-                    <div className="flex flex-col justify-center items-center gap-2">
+                <div className="car-card__icon-container">
+                    <div className="car-card__icon">
                         <Image
                             src="/steering-wheel.svg"
                             width={20}
                             height={20}
                             alt="steering-wheel"
                         />
-                        <p className="text-[14px] leading-[17px]">
+                        <p className="car-card__icon-text">
                             {transmission === "a" ? "Automatic" : "Manual"}
                         </p>
                     </div>
 
-                    <div className="flex flex-col justify-center items-center gap-2">
+                    <div className="car-card__icon">
                         <Image
                             src="/tire.svg"
                             width={20}
                             height={20}
-                            alt="tire"
+                            alt="seat"
                         />
-                        <p className="text-[14px]">{drive.toUpperCase()}</p>
+                        <p className="car-card__icon-text">{drive.toUpperCase()}</p>
                     </div>
 
-                    <div className="flex flex-col justify-center items-center gap-2">
+                    <div className="car-card__icon">
                         <Image
                             src="/gas.svg"
                             width={20}
@@ -88,14 +102,14 @@ const CarCard = ({ car }: CarCardProps) => {
                         containerStyles="w-full py-[16px] rounded-full bg-primary-blue"
                         textStyles="text-white text-[14px] leading-[17px] font-bold"
                         rightIcon="/right-arrow.svg"
-                        handleClick={() => setIsOpen(true)}
+                        handleClick={openModal}
                     />
                 </div>
             </div>
 
             <CarDetails
                 isOpen={isOpen}
-                closeModal={() => setIsOpen(false)}
+                closeModal={closeModal}
                 car={car}
             />
         </div>

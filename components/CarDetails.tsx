@@ -65,6 +65,7 @@ const CarDetails = ({ isOpen, closeModal, car }: CarDetailsProps) => {
                                                 src={generateCarImageUrl(car)}
                                                 alt="car model"
                                                 fill
+                                                sizes="100%"
                                                 priority
                                                 className="object-contain"
                                             />
